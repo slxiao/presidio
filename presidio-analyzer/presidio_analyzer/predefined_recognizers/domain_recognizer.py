@@ -15,7 +15,7 @@ class DomainRecognizer(PatternRecognizer):
     def __init__(self):
         patterns = [Pattern('Domain ()', REGEX, 0.5)]
         super().__init__(supported_entity="DOMAIN_NAME", patterns=patterns,
-                         context=CONTEXT)
+                         context=CONTEXT, supported_language="en")
 
     def validate_result(self, pattern_text):
         result = tldextract.extract(pattern_text)

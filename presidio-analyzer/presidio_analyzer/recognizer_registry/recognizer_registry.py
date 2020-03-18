@@ -7,7 +7,7 @@ from presidio_analyzer.predefined_recognizers import CreditCardRecognizer, \
     EmailRecognizer, IbanRecognizer, IpRecognizer, NhsRecognizer, \
     UsBankRecognizer, UsLicenseRecognizer, \
     UsItinRecognizer, UsPassportRecognizer, UsPhoneRecognizer, \
-    UsSsnRecognizer, SgFinRecognizer
+    UsSsnRecognizer, SgFinRecognizer, ILIDRecognizer
 
 
 class RecognizerRegistry:
@@ -56,7 +56,7 @@ class RecognizerRegistry:
             UsBankRecognizer(), UsLicenseRecognizer(),
             UsItinRecognizer(), UsPassportRecognizer(),
             UsPhoneRecognizer(), UsSsnRecognizer(),
-            SpacyRecognizer(), SgFinRecognizer()])
+            SpacyRecognizer(), SgFinRecognizer(), ILIDRecognizer()])
 
     def get_recognizers(self, language, entities=None,
                         all_fields=False):
@@ -85,12 +85,12 @@ class RecognizerRegistry:
         to_return = []
         if all_fields:
             to_return = [rec for rec in all_possible_recognizers if
-                         language == rec.supported_language]
+                         language == rec.supported_language or 'all' == rec.supported_language]
         else:
             for entity in entities:
                 subset = [rec for rec in all_possible_recognizers if
                           entity in rec.supported_entities
-                          and language == rec.supported_language]
+                          and (language == rec.supported_language or 'all' == rec.supported_language)]
 
                 if not subset:
                     logging.warning("Entity %s doesn't have the corresponding"
